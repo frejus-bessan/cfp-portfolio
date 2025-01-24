@@ -40,16 +40,30 @@ if(!isset($password) or empty($password)) {
     }
 }
 
-if(!empty($password) and $password != $paswordconfirm) {
+if(!empty($password) and ($password != $passwordConfirm)) {
     $errors['passwordConfirm'] = "Les champs confirmation de mot de passe et mot de passe doivent contenir les mêmes valeurs.";
+}
+
+if(!isset($remember_me) or empty($remember_me)) {
+    $errors['remember_me'] = "Vous devez cocher cette case pour continuer";
+} else {
+    $data["remember_me"] = $remember_me;
 }
 
 if(!empty($errors)) {
     $_SESSION['global_error'] = 'Des erreurs sont survenues. Consultez les différents champs.';
     $_SESSION['errors'] = $errors;
     $_SESSION['data'] = $data;
+
+    header('location: index.php?page=inscription');
+    exit;
 } else {
-    
+    if (sign_up($last_name, $first_names, $email, $password)) {
+        $_SESSION['global_success'] = 'Inscription effectuée avec succès. Vous pouvez désormais vous connecter.';
+    } else {
+        $_SESSION['global_error'] = 'Une erreur est survenue lors de votre enregistrement dans la base de données. Réessayer, si cela persiste, contactez les admins du site.';
+    }
+
+    header('location: index.php?page=connexion');
+    exit;
 }
-
-
