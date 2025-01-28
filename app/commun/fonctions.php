@@ -30,6 +30,15 @@ function router() {
             case 'traitement-inscription':
                 include(__DIR__.'/../inscription/traitement-inscription.php');
                 break;
+            case 'projets':
+                include(__DIR__.'/../projets/index.php');
+                break;
+            case 'ajout-projet':
+                include(__DIR__.'/../projets/ajouter-projet.php');
+                break; 
+            case 'modifier-projet':
+                include(__DIR__.'/../projets/modifier-projet.php');
+                break;
             
             default:
                 include(__DIR__.'/../connexion/index.php');

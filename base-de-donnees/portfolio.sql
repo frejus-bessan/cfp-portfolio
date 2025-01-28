@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 21 jan. 2025 à 20:55
+-- Généré le : mar. 28 jan. 2025 à 20:40
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.0.28
 
@@ -24,6 +24,25 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `projets`
+--
+
+CREATE TABLE `projets` (
+  `id` int(11) NOT NULL,
+  `name` int(255) NOT NULL,
+  `short_description` int(11) NOT NULL,
+  `description` int(11) DEFAULT NULL,
+  `image` varchar(255) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `activated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `users`
 --
 
@@ -37,11 +56,18 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT current_timestamp(),
   `activated_at` timestamp NULL DEFAULT current_timestamp(),
   `deleted_at` timestamp NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Index pour les tables déchargées
 --
+
+--
+-- Index pour la table `projets`
+--
+ALTER TABLE `projets`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `projets_user_id_users_id` (`user_id`);
 
 --
 -- Index pour la table `users`
@@ -54,10 +80,26 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT pour la table `projets`
+--
+ALTER TABLE `projets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `projets`
+--
+ALTER TABLE `projets`
+  ADD CONSTRAINT `projets_user_id_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

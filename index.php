@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include_once(__DIR__ . '/commun/fonctions.php');
+include_once(__DIR__ . '/app/commun/fonctions.php');
 ?>
 
 <!DOCTYPE html>
@@ -11,12 +11,12 @@ include_once(__DIR__ . '/commun/fonctions.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio</title>
-    <link rel="stylesheet" href="./public/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./public/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" href="./app/public/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./app/public/fontawesome/css/all.min.css" />
 </head>
 
 <body>
-    <?php include_once(__DIR__ . '/commun/header.php') ?>
+    <?php include_once(__DIR__ . '/app/commun/header.php') ?>
 
     <main>
 
@@ -53,12 +53,12 @@ include_once(__DIR__ . '/commun/fonctions.php');
     </main>
 
 
-    <?php include_once(__DIR__ . '/commun/footer.php') ?>
+    <?php include_once(__DIR__ . '/app/commun/footer.php') ?>
 
 </body>
 
-<script src="./public/bootstrap/js/bootstrap.min.js"></script>
-<script src="./public/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="./app/public/bootstrap/js/bootstrap.min.js"></script>
+<script src="./app/public/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </html>
 
