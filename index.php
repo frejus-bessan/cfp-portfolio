@@ -13,12 +13,22 @@ include_once(__DIR__ . '/app/commun/fonctions.php');
     <title>Portfolio</title>
     <link rel="stylesheet" href="./app/public/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="./app/public/fontawesome/css/all.min.css" />
+
+    <style>
+        html, body, main {
+            height: 100%;
+        }
+
+        .content {
+            flex: 1;
+        }
+    </style>
 </head>
 
 <body>
     <?php include_once(__DIR__ . '/app/commun/header.php') ?>
 
-    <main>
+    <main class="content">
 
         <div class="container">
 

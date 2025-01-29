@@ -14,12 +14,12 @@ if (isset($_SESSION['data'])) {
 <div class="row justify-content-center">
     <div class="col-md-10 card p-4">
 
-        <form action="index.php?page=ajout-traitement" method="post">
+        <form action="index.php?page=ajout-traitement" method="post" enctype="multipart/form-data">
             <h1 class="h3 mb-3 fw-normal">Nouveau projet</h1>
 
             <div class="form-floating mb-3">
                 <input type="text" class="form-control <?= !empty($errors['name']) ? 'is-invalid' : '' ?>" name="name"
-                    id="name" placeholder="Nom" value="<?= !empty($data['title']) ? $data['name'] : '' ?>">
+                    id="name" placeholder="Nom" value="<?= !empty($data['title']) ? $data['name'] : '' ?>" required>
                 <label for="name">Nom</label>
                 <?php
                 if (!empty($errors['name'])) {
@@ -30,11 +30,10 @@ if (isset($_SESSION['data'])) {
                 ?>
             </div>
             
-            <div class="row">
-            <div class="col-md-6 form-floating mb-3">
-                <label for="short_description" class="mx-2">Courte description</label>
+            <div class="mb-3">
+                <label for="short_description">Courte description</label>
                 <textarea name="short_description" id="short_description"
-                    class="form-control <?= !empty($errors['short_description']) ? 'is-invalid' : '' ?>" cols="30" rows="30">
+                    class="form-control <?= !empty($errors['short_description']) ? 'is-invalid' : '' ?>" cols="30" required>
                     <?= !empty($data['short_description']) ? $data['short_description'] : '' ?>
                 </textarea>
                 <?php
@@ -46,10 +45,10 @@ if (isset($_SESSION['data'])) {
                 ?>
             </div>
 
-            <div class="col-md-6 form-floating mb-3">
-                <label for="description" class="mx-2">Description</label>
+            <div class="mb-3">
+                <label for="description">Description</label>
                 <textarea name="description" id="description"
-                    class="form-control <?= !empty($errors['description']) ? 'is-invalid' : '' ?>" cols="50" rows="50">
+                    class="form-control <?= !empty($errors['description']) ? 'is-invalid' : '' ?>" cols="50" rows="5">
                     <?= !empty($data['description']) ? $data['description'] : '' ?>
                 </textarea>
                 <?php
@@ -60,11 +59,10 @@ if (isset($_SESSION['data'])) {
                 }
                 ?>
             </div>
-            </div>
 
             <div class="mb-3">
-                <label for="formFile" class="form-label">Sélectionner une image à mettre en avant</label>
-                <input class="form-control <?= !empty($errors['image']) ? 'is-invalid' : '' ?>" type="file" name="image" id="formFile">
+                <label for="formFile" class="form-label">Sélectionner une image à mettre en avant [Poids maximum : 2mo, Extensions autorisées: JPEG, JPG, PNG, GIF]</label>
+                <input class="form-control <?= !empty($errors['image']) ? 'is-invalid' : '' ?>" type="file" name="image" id="formFile" required>
                 <?php
                 if (!empty($errors['image'])) {
                     ?>

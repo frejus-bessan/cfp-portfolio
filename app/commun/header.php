@@ -6,9 +6,21 @@
       </a>
 
       <ul class="nav nav-pills">
+        <?php
+          if(is_connected()){
+        ?>
         <li class="nav-item"><a href="index.php?page=projets" class="nav-link <?= (isset($_GET['page']) && $_GET['page'] == 'projets') ? 'active' : '' ?>">Mes projets</a></li>
+        <li class="nav-item"><a href="index.php?page=deconnexion" class="nav-link link-danger">Deconnexion</a></li>
+
+        <?php
+          } else {
+        ?>
         <li class="nav-item"><a href="index.php?page=connexion" class="nav-link <?= (isset($_GET['page']) && $_GET['page'] == 'connexion') ? 'active' : '' ?>">Connexion</a></li>
         <li class="nav-item"><a href="index.php?page=inscription" class="nav-link <?= (isset($_GET['page']) && $_GET['page'] == 'inscription') ? 'active' : '' ?>">Inscription</a></li>
+
+        <?php
+          }
+        ?>
       </ul>
     </header>
 </div>

@@ -35,6 +35,6 @@ if (!empty($errors)) {
         $_SESSION['data'] = $data;
     }
 
-    header('location: index.php?page=connexion');
+    header('location: index.php?page=projets');
     exit;
 }

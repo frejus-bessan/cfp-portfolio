@@ -24,6 +24,9 @@ function router() {
             case 'traitement-connexion':
                 include(__DIR__.'/../connexion/traitement-connexion.php');
                 break;
+            case 'deconnexion':
+                include(__DIR__.'/../connexion/deconnexion.php');
+                break;
             case 'inscription':
                 include(__DIR__.'/../inscription/index.php');
                 break;
@@ -36,16 +39,19 @@ function router() {
             case 'ajout-projet':
                 include(__DIR__.'/../projets/ajouter-projet.php');
                 break; 
+            case 'ajout-traitement':
+                include(__DIR__.'/../projets/ajout-traitement.php');
+                break; 
             case 'modifier-projet':
                 include(__DIR__.'/../projets/modifier-projet.php');
                 break;
             
             default:
-                include(__DIR__.'/../connexion/index.php');
+                include(__DIR__.'/../inscription/index.php');
                 break;
         }
     } else {
-        include(__DIR__.'/../connexion/index.php');
+        include(__DIR__.'/../inscription/index.php');
     }
 }
 
@@ -98,7 +104,7 @@ function sign_in($email, $password) {
 
     $sqlconnection = db_connect();
 
-    $requete = "SELECT last_name, first_names, email from users where email=:mail AND password=:password";
+    $requete = "SELECT id, last_name, first_names, email from users where email=:mail AND password=:password";
 
     $preparationRequete = $sqlconnection->prepare($requete);
 
@@ -119,4 +125,79 @@ function sign_in($email, $password) {
 
 function is_connected() {
     return isset($_SESSION['utilisateur_connecter']) && !empty($_SESSION['utilisateur_connecter']);
+}
+
+function insert_project($name, $short_description, $description, $image, $user_id) {
+    $sqlconnection = db_connect();
+
+    $requete = "INSERT INTO projets (name, short_description, description, image, user_id) VALUES(:name, :short_description, :description, :image, :user_id)";
+
+    $preparationRequete = $sqlconnection->prepare($requete);
+
+    $execution = $preparationRequete->execute(array(
+        "name"=> $name,
+        "short_description"=> $short_description,
+        "description"=> $description,
+        "image"=> $image,
+        "user_id"=> $user_id,
+    ));
+
+    return $execution;
+}
+
+function get_projects($project_id=null) {
+    $sqlconnection = db_connect();
+
+    $data =[];
+
+    $requete = "SELECT * FROM projets WHERE deleted_at IS NULL ORDER BY id DESC";
+    
+    if (!is_null($project_id)){
+        $requete = "SELECT * FROM projets WHERE id=:project_id AND deleted_at=NULL ORDER BY id DESC";
+    }
+
+    $preparationRequete = $sqlconnection->prepare($requete);
+
+    if (!is_null($project_id)){
+        $preparationRequete->execute(array("project_id"=> $project_id));
+    } else {
+        $preparationRequete->execute();
+    }
+
+    $data = $preparationRequete->fetchAll(PDO::FETCH_ASSOC);
+
+    return $data;
+}
+
+function update_project($project_id, $name, $short_description, $description, $image) {
+
+    $sqlconnection = db_connect();
+
+    $requete = "UPDATE projets SET name=:name, short_description=:short_description, description=:description, image=:image, updated_at=". date('Y/m/d H:i:s') ." WHERE id=:project_id";
+
+    $preparationRequete = $sqlconnection->prepare($requete);
+
+    $execution = $preparationRequete->execute(array(
+        "id"=> $project_id,
+        "name"=> $name,
+        "short_description"=> $short_description,
+        "description"=> $description,
+        "image"=> $image,
+    ));
+
+    return $execution;
+}
+
+function delete_project($project_id) {
+    $sqlconnection = db_connect();
+
+    $requete = "UPDATE projets SET deleted_at=". date('Y/m/d H:i:s') ." WHERE id=:project_id";
+
+    $preparationRequete = $sqlconnection->prepare($requete);
+
+    $execution = $preparationRequete->execute(array(
+        "id"=> $project_id,
+    ));
+
+    return $execution;
 }
