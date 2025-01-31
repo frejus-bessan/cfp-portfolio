@@ -21,8 +21,12 @@ if (!isset($short_description) or empty($short_description)) {
 }
 
 if (!isset($description) or empty($description)) {
-    $description = null;
+    $description = '';
+} else {
+    $data["description"] = $short_description;
 }
+
+//die(var_dump($name, $short_description, $description));
 
 $extensions_autorisees = ['jpg', 'jpeg', 'png', 'gif'];
 
@@ -40,12 +44,14 @@ if (isset($_FILES["image"]) && $_FILES['image']['error'] == 0) {
     }
 
     if (empty($errors['image'])) {
-        $chemin_vers_stockage_photos = dirname(__DIR__) . '/public/img/upload/';
+        $chemin_vers_stockage_photos = dirname(__DIR__) . "/public/img/upload/";
 
         if (!is_dir($chemin_vers_stockage_photos)) {
             mkdir($chemin_vers_stockage_photos);
         }
         $chemin_vers_photo_soumise = $chemin_vers_stockage_photos . basename($_FILES['image']['name']);
+
+        //die(var_dump($chemin_vers_photo_soumise, $chemin_vers_stockage_photos));
 
         if (!move_uploaded_file($_FILES['image']['tmp_name'], $chemin_vers_photo_soumise)) {
             $errors['image'] = "Une erreur est survenue lors du téléchargement de votre image. Reessayer ou contactez les administrateurs si cela persiste.";
@@ -59,10 +65,11 @@ if (!empty($errors)) {
     $_SESSION['errors'] = $errors;
     $_SESSION['data'] = $data;
 
-    header('location: index.php?page=ajouter-projet');
+    header('location: index.php?page=ajout-projet');
     exit;
 } else {
-    if (insert_project($name, $short_description, $description, $chemin_vers_photo_soumise, $_SESSION['utilisateur_connecter']['id'])) {
+    //die(var_dump($name, $short_description, $description));
+    if (insert_project($name, $short_description, $description, basename($_FILES['image']['name']), $_SESSION['utilisateur_connecter']['id'])) {
         $_SESSION['global_success'] = 'Nouveau projet ajouté avec succès.';
     } else {
         $_SESSION['global_error'] = 'Une erreur est survenue lors de l\'ajout de votre projet. Reesayrer ou contactez les admins si cela persiste.';

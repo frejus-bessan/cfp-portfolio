@@ -29,16 +29,16 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `projets` (
   `id` int(11) NOT NULL,
-  `name` int(255) NOT NULL,
-  `short_description` int(11) NOT NULL,
-  `description` int(11) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `short_description` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
   `image` varchar(255) NOT NULL,
   `user_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL,
   `activated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -56,7 +56,7 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT current_timestamp(),
   `activated_at` timestamp NULL DEFAULT current_timestamp(),
   `deleted_at` timestamp NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Index pour les tables déchargées

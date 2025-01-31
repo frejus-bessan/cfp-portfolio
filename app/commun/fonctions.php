@@ -145,23 +145,28 @@ function insert_project($name, $short_description, $description, $image, $user_i
     return $execution;
 }
 
-function get_projects($project_id=null) {
+function get_projects($user_id, $project_id=null) {
     $sqlconnection = db_connect();
 
     $data =[];
 
-    $requete = "SELECT * FROM projets WHERE deleted_at IS NULL ORDER BY id DESC";
+    $requete = "SELECT * FROM projets WHERE user_id=:user_id AND deleted_at IS NULL ORDER BY id DESC";
     
     if (!is_null($project_id)){
-        $requete = "SELECT * FROM projets WHERE id=:project_id AND deleted_at=NULL ORDER BY id DESC";
+        $requete = "SELECT * FROM projets WHERE user_id=:user_id AND id=:project_id AND deleted_at IS NULL ORDER BY id DESC";
     }
 
     $preparationRequete = $sqlconnection->prepare($requete);
 
     if (!is_null($project_id)){
-        $preparationRequete->execute(array("project_id"=> $project_id));
+        $preparationRequete->execute(array(
+            "user_id"=> $user_id,
+            "project_id"=> $project_id,
+        ));
     } else {
-        $preparationRequete->execute();
+        $preparationRequete->execute(array(
+            "user_id"=> $user_id,
+        ));
     }
 
     $data = $preparationRequete->fetchAll(PDO::FETCH_ASSOC);

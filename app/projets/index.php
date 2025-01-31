@@ -1,6 +1,6 @@
 <?php
-$projects = get_projects();
-var_dump($projects)
+$projects = get_projects($_SESSION['utilisateur_connecter']['id']);
+//var_dump($projects)
 ?>
 
 <div class="">
@@ -14,81 +14,77 @@ var_dump($projects)
         <?php
         if (count($projects) > 0) {
             foreach ($projects as $project) {
-                ?>
-                <a href="#" style="text-decoration: none;" data-bs-toggle="modal"
+        ?>
+                <div class="col-md-3" data-bs-toggle="modal"
                     data-bs-target="#project<?= $project["id"] ?>">
-                    <div class="col-md-3">
-                        <div class="card">
-                            <div class="p-1 w-100">
-                                <img src="<?= $project["image"] ?>" class="w-100" alt="Image du projet">
-                            </div>
-                            <p class="p-1 m-0 text-sm fw-bold"><?= $project['name'] ?></p>
-
-                            <p class="p-1 m-0 text-sm text-muted"><em
-                                    class="text-justify"><?= $project['short_description'] ?></em></p>
-                            <hr class="m-0 mx-1">
-                            <div class="row p-2 justify-content-center">
-                                <div class="col-6">
-                                    <a href="index.php?page=modifier-projet&id=<?= $project['id'] ?>"
-                                        class="btn btn-warning">Modifier</a>
-                                </div>
-                                <div class="col-6">
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#delete_project<?= $project["id"] ?>"
-                                        class="btn btn-danger">Supprimer</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-
-                
-
-        <!-- Modal d'aperçu -->
-        <div class="modal fade" id="project<?= $project['id'] ?>" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5"><?= $project['name'] ?></h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
+                    <div class="card">
                         <div class="p-1 w-100">
-                            <img src="<?= $project["image"] ?>" class="w-100" alt="Image du projet">
+                            <img src="app/public/img/upload/<?= $project['image'] ?>" class="w-100" alt="Image du projet">
                         </div>
+                        <p class="p-1 m-0 text-sm fw-bold"><?= $project['name'] ?></p>
 
                         <p class="p-1 m-0 text-sm text-muted"><em
-                                class="text-justify"><?= $project['description'] ?></em></p>
+                                class="text-justify"><?= $project['short_description'] ?></em></p>
                         <hr class="m-0 mx-1">
+                        <div class="row p-2 justify-content-center">
+                            <div class="col-6">
+                                <a href="index.php?page=modifier-projet&id=<?= $project['id'] ?>"
+                                    class="btn btn-warning">Modifier</a>
+                            </div>
+                            <div class="col-6">
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#delete_project<?= $project["id"] ?>"
+                                    class="btn btn-danger">Supprimer</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Modal de suppression -->
-        <div class="modal fade" id="delete_project<?= $project['id'] ?>" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5">Supprimer <?= $project['name'] ?></h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Êtes-vous sÛr(e) de vouloir supprimer ce projet ?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
-                        <a href="index.php?page=supprimer-projet&id=<?= $project['id'] ?>" class="btn btn-primary">Oui, supprimer</a>
+                <!-- Modal d'aperçu -->
+                <div class="modal fade" id="project<?= $project['id'] ?>" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5"><?= $project['name'] ?></h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="p-1 w-100">
+                                    <img src="app/public/img/upload/<?= $project['image'] ?>" class="w-100" alt="Image du projet">
+                                </div>
+
+                                <p class="p-1 m-0 text-sm text-muted"><em
+                                        class="text-justify"><?= $project['description'] ?></em></p>
+                                <hr class="m-0 mx-1">
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-                <?php
+
+                <!-- Modal de suppression -->
+                <div class="modal fade" id="delete_project<?= $project['id'] ?>" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5">Supprimer <?= $project['name'] ?></h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Êtes-vous sÛr(e) de vouloir supprimer ce projet ?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Annuler</button>
+                                <a href="index.php?page=supprimer-projet&id=<?= $project['id'] ?>" class="btn btn-primary">Oui, supprimer</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php
             }
         } else {
             ?>
             <h3 class="text-center py-5">Aucun projet actuellement disponible.. <a
                     href="index.php?page=ajout-projet">Cliquez ici pour en ajouter</a></h3>
-            <?php
+        <?php
         }
         ?>
     </div>

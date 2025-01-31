@@ -19,7 +19,7 @@ if (isset($_SESSION['data'])) {
 
             <div class="form-floating mb-3">
                 <input type="text" class="form-control <?= !empty($errors['name']) ? 'is-invalid' : '' ?>" name="name"
-                    id="name" placeholder="Nom" value="<?= !empty($data['title']) ? $data['name'] : '' ?>" required>
+                    id="name" placeholder="Nom" value="<?= !empty($data['name']) ? $data['name'] : '' ?>" required>
                 <label for="name">Nom</label>
                 <?php
                 if (!empty($errors['name'])) {
