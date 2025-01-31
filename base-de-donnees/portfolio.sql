@@ -30,8 +30,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `projets` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `short_description` varchar(255) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
+  `short_description` text() NOT NULL,
+  `description` text() DEFAULT NULL,
   `image` varchar(255) NOT NULL,
   `user_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),

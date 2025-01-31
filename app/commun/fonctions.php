@@ -45,7 +45,9 @@ function router() {
             case 'modifier-projet':
                 include(__DIR__.'/../projets/modifier-projet.php');
                 break;
-            
+            case 'modification-traitement':
+                include(__DIR__.'/../projets/modification-traitement.php');
+                break;
             default:
                 include(__DIR__.'/../inscription/index.php');
                 break;
@@ -178,16 +180,17 @@ function update_project($project_id, $name, $short_description, $description, $i
 
     $sqlconnection = db_connect();
 
-    $requete = "UPDATE projets SET name=:name, short_description=:short_description, description=:description, image=:image, updated_at=". date('Y/m/d H:i:s') ." WHERE id=:project_id";
+    $requete = "UPDATE projets SET name=:name, short_description=:short_description, description=:description, image=:image, updated_at=:updated_at WHERE id=:project_id";
 
     $preparationRequete = $sqlconnection->prepare($requete);
 
     $execution = $preparationRequete->execute(array(
-        "id"=> $project_id,
+        "project_id"=> $project_id,
         "name"=> $name,
         "short_description"=> $short_description,
         "description"=> $description,
         "image"=> $image,
+        "updated_at" => date('Y/m/d H:i:s')
     ));
 
     return $execution;
@@ -205,4 +208,27 @@ function delete_project($project_id) {
     ));
 
     return $execution;
+}
+
+function check_project($project_id, $user_id) {
+    $exists = false;
+
+    $sqlconnection = db_connect();
+
+    $requete = "SELECT * from projets where id=:project_id and user_id=:user_id and deleted_at IS NULL";
+
+    $preparationRequete = $sqlconnection->prepare($requete);
+
+    $preparationRequete->execute(array(
+        "project_id"=> $project_id,
+        "user_id"=> $user_id,
+    ));
+
+    $data = $preparationRequete->fetchAll(PDO::FETCH_ASSOC);
+
+    if (!empty($data)){
+        $exists = true;
+    }
+
+    return $exists;
 }

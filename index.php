@@ -19,7 +19,7 @@ include_once(__DIR__ . '/app/commun/fonctions.php');
             height: 100%;
         }
 
-        .content {
+        .content, main {
             flex: 1;
         }
     </style>
@@ -30,7 +30,7 @@ include_once(__DIR__ . '/app/commun/fonctions.php');
 
     <main class="content">
 
-        <div class="container">
+        <div class="container content">
 
             <div class="row justify-content-center">
                 <div class="col-md-6">

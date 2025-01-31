@@ -57,7 +57,8 @@ if (isset($_FILES["image"]) && $_FILES['image']['error'] == 0) {
             $errors['image'] = "Une erreur est survenue lors du téléchargement de votre image. Reessayer ou contactez les administrateurs si cela persiste.";
         }
     }
-
+} else {
+    $errors['image'] = "Une erreur est survenue. Vous n'avez pas soumis d'image ou l'image soumise rencontre un problème lors du téléversement. Changer d'image ou reessayer.";
 }
 
 if (!empty($errors)) {
